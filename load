@@ -1,0 +1,13 @@
+#! /bin/sh
+
+echo "Loading file: "
+
+send_file(){
+ flname=$1
+
+ dos2unix /home/Y317522/data/$flname
+ chmod 777 /home/Y317522/data/$flname
+ scp -p /home/Y317522/data/$flname nzapvm31.nndc.kp.org:/oraftp/arch/temp/data
+}
+
+send_file $1
