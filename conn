@@ -5,25 +5,19 @@ SSH () {
   echo "Connecting to $2 ..."
   ssh "$2"
   ret_code=$?
-  if [[ $ret_code -eq 0 ]] && [[ "$1" = "N" ]]
-  then
+  if [[ $ret_code -eq 0 ]] && [[ "$1" = "N" ]]; then
     echo "$2" >> $sshfile
   fi
   echo "$2~$start_time~$(date +"%D %T")~$ret_code" >> $stafile 
 }
-if [ $# -eq 0 ]
-then
+if [[ $# -eq 0 ]]; then
   awk '{printf("%-10s %-50s\n", $2, $1)}' $sshfile
-elif [ $# -gt 0 ]
-then
-  if expr match $1 '[0-9]\{1,\}' > /dev/null && [[ $1 -lt 99 ]]
-  then
+elif [[ $# -gt 0 ]]; then
+  if expr match $1 '[0-9]\{1,\}' > /dev/null && [[ $1 -lt 99 ]]; then
      SSH "O" $(head -$1 $sshfile | tail -1)
-  elif [[ $(grep -ic "$*" $sshfile) -eq 1 ]]
-  then
+  elif [[ $(grep -ic "$*" $sshfile) -eq 1 ]]; then
      SSH "O" $(grep -i "$*" $sshfile)
-  elif [[ $(grep -ic "$*" $sshfile) -gt 1 ]]
-  then
+  elif [[ $(grep -ic "$*" $sshfile) -gt 1 ]]; then
         echo "More then one server found. Try to be precise. "
         grep --color=auto -n "$*" $sshfile | awk 'BEGIN {FS=":";}{printf "   %-6d%2s\n", $1, $2}'
   else
