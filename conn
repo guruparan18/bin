@@ -1,11 +1,15 @@
 sshfile=$HOME/cfg/sshfiles.txt
+stafile=$HOME/cfg/sshfiles.stat
+start_time=$(date +"%D %T")
 SSH () {
-        echo "Connecting to $2 ..."
-        ssh "$2"
-        if [[ $? -eq 0 ]] && [[ "$1" = "N" ]]
-        then
-                echo "$2" >> $sshfile
-        fi
+  echo "Connecting to $2 ..."
+  ssh "$2"
+  ret_code=$?
+  if [[ $ret_code -eq 0 ]] && [[ "$1" = "N" ]]
+  then
+    echo "$2" >> $sshfile
+  fi
+  echo "$2~$start_time~$(date +"%D %T")~$ret_code" >> $stafile 
 }
 if [ $# -eq 0 ]
 then
