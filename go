@@ -4,17 +4,24 @@ get_file () {
         scp -p $serv_name:$1 .
 }
 send_file () {
-        dos2unix $1
-        chmod 666 $1
-        echo " Sending file $1 to $serv_name"
-        scp -Cp $1 $serv_name:/tmp/
+        fl=$(basename $1)
+        dr=$(dirname $1)
+        dos2unix $fl
+        chmod 666 $fl
+
+        if [[ $dr = "." ]]; then
+          dr="/tmp/y317522/"
+        fi
+
+        echo " Sending file $fl to $serv_name:$dr"
+        scp -Cp $fl $serv_name:$dr
 }
 
 if [[ $# -eq 0 ]]; then
  echo "Usage: go [get|send] servername /path/to/file"
  echo "  * get  needs full remote path and copies the file to the current local path"
  echo "  * send needs full remote path and copies the file from the current local path"  
- cat -n $SERV_FILE
+ awk '{printf("%-10s %-50s\n", $2, $1)}' $SERV_FILE
  exit
 fi
 
