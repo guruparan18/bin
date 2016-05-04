@@ -1,0 +1,21 @@
+#! /usr/bin/python
+
+from datetime import tzinfo, timedelta, datetime
+import numpy as np
+
+sfname="/home/Y317522/cfg/sshfiles.stat"
+f=open(sfname, "r")
+cont_list = list()
+serv = dict()
+
+def most_called():
+	for item in cont_list:
+		if item[0] not in serv.values():
+			serv[len(serv)+1]=item[0]
+		
+			
+for line in f:
+	cont_list.append(line.strip().split("~"))	
+	
+print(cont_list)
+f.close()
