@@ -15,7 +15,7 @@ def most_called():
 		
 			
 for line in f:
-	cont_list.append(line.strip().split("~"))	
+	cont_list.append(line.strip().split("~"))
 	
 print(cont_list)
 f.close()

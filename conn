@@ -11,7 +11,7 @@ SSH () {
   echo "$2~$start_time~$(date +"%D %T")~$ret_code" >> $stafile 
 }
 if [[ $# -eq 0 ]]; then
-  awk '{printf("%-10s %-50s\n", $2, $1)}' $sshfile
+  awk '{printf("%-12s %-50s\n", $2, $1)}' $sshfile
 elif [[ $# -gt 0 ]]; then
   if expr match $1 '[0-9]\{1,\}' > /dev/null && [[ $1 -lt 99 ]]; then
      SSH "O" $(head -$1 $sshfile | tail -1)

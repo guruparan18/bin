@@ -17,11 +17,11 @@ send_file () {
         scp -Cp $fl $serv_name:$dr
 }
 
-if [[ $# -eq 0 ]]; then
+if [[ $# -lt 3 ]]; then
  echo "Usage: go [get|send] servername /path/to/file"
  echo "  * get  needs full remote path and copies the file to the current local path"
  echo "  * send needs full remote path and copies the file from the current local path"  
- awk '{printf("%-10s %-50s\n", $2, $1)}' $SERV_FILE
+ awk '{printf("%-12s %-50s\n", $2, $1)}' $SERV_FILE
  exit
 fi
 
